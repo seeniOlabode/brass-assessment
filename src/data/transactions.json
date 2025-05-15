@@ -1,32 +1,98 @@
 [
     {
-        "date": "2025-05-15T12:30:00Z",
+        "id": "tx_1684170600_1",
+        "date": "2025-05-15T13:30:00Z",
         "amount": 1250.99,
         "merchant": "Acme Corp",
         "status": "settled"
     },
     {
-        "date": "2025-05-15T12:15:00Z",
+        "id": "tx_1684170300_2",
+        "date": "2025-05-15T13:15:00Z",
         "amount": 890.50,
         "merchant": "Tech Solutions Ltd",
         "status": "processing"
     },
     {
-        "date": "2025-05-15T11:45:00Z",
+        "id": "tx_1684170000_3",
+        "date": "2025-05-15T13:00:00Z",
         "amount": 450.00,
         "merchant": "Global Services Inc",
         "status": "failed"
     },
     {
-        "date": "2025-05-15T11:30:00Z",
+        "id": "tx_1684169700_4",
+        "date": "2025-05-15T12:45:00Z",
         "amount": 2100.75,
         "merchant": "Digital Systems",
         "status": "settled"
     },
     {
-        "date": "2025-05-15T11:00:00Z",
+        "id": "tx_1684169400_5",
+        "date": "2025-05-15T12:30:00Z",
         "amount": 750.25,
         "merchant": "Cloud Computing Co",
+        "status": "processing"
+    },
+    {
+        "id": "tx_1684169100_6",
+        "date": "2025-05-15T12:15:00Z",
+        "amount": 325.50,
+        "merchant": "Office Supplies Plus",
+        "status": "settled"
+    },
+    {
+        "date": "2025-05-15T12:00:00Z",
+        "amount": 1875.00,
+        "merchant": "Marketing Solutions",
+        "status": "processing"
+    },
+    {
+        "date": "2025-05-15T11:45:00Z",
+        "amount": 550.75,
+        "merchant": "Software Services Ltd",
+        "status": "failed"
+    },
+    {
+        "date": "2025-05-15T11:30:00Z",
+        "amount": 975.25,
+        "merchant": "Data Analytics Co",
+        "status": "settled"
+    },
+    {
+        "date": "2025-05-15T11:15:00Z",
+        "amount": 1450.00,
+        "merchant": "Cloud Infrastructure Inc",
+        "status": "processing"
+    },
+    {
+        "date": "2025-05-15T11:00:00Z",
+        "amount": 225.50,
+        "merchant": "Office Cleaning Services",
+        "status": "settled"
+    },
+    {
+        "date": "2025-05-15T10:45:00Z",
+        "amount": 3250.75,
+        "merchant": "IT Consulting Group",
+        "status": "failed"
+    },
+    {
+        "date": "2025-05-15T10:30:00Z",
+        "amount": 675.25,
+        "merchant": "Security Systems Ltd",
+        "status": "processing"
+    },
+    {
+        "date": "2025-05-15T10:15:00Z",
+        "amount": 1750.00,
+        "merchant": "Web Development Co",
+        "status": "settled"
+    },
+    {
+        "date": "2025-05-15T10:00:00Z",
+        "amount": 425.50,
+        "merchant": "Business Insurance Ltd",
         "status": "processing"
     }
 ]
