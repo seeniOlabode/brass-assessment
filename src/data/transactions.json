@@ -1,0 +1,32 @@
+[
+    {
+        "date": "2025-05-15T12:30:00Z",
+        "amount": 1250.99,
+        "merchant": "Acme Corp",
+        "status": "settled"
+    },
+    {
+        "date": "2025-05-15T12:15:00Z",
+        "amount": 890.50,
+        "merchant": "Tech Solutions Ltd",
+        "status": "processing"
+    },
+    {
+        "date": "2025-05-15T11:45:00Z",
+        "amount": 450.00,
+        "merchant": "Global Services Inc",
+        "status": "failed"
+    },
+    {
+        "date": "2025-05-15T11:30:00Z",
+        "amount": 2100.75,
+        "merchant": "Digital Systems",
+        "status": "settled"
+    },
+    {
+        "date": "2025-05-15T11:00:00Z",
+        "amount": 750.25,
+        "merchant": "Cloud Computing Co",
+        "status": "processing"
+    }
+]
