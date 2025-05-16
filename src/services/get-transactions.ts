@@ -1,5 +1,5 @@
-import allTransactions from '../data/transactions.json';
 import { type Transaction } from '../@types/transactions';
+import { faker } from '@faker-js/faker';
 
 interface GetTransactionsParams {
     page?: number;
@@ -15,6 +15,20 @@ interface GetTransactionsResponse {
     nextPage: number;
 }
 
+// Generate a pool of transactions that we'll reuse
+const generateTransactionPool = (size: number = 100): Transaction[] => {
+    return Array.from({ length: size }, () => ({
+        id: `tx_${faker.string.nanoid()}`,
+        date: faker.date.recent({ days: 30 }).toISOString(),
+        amount: parseFloat(faker.finance.amount({ min: 1, max: 1000, dec: 2 })),
+        merchant: faker.company.name(),
+        status: faker.helpers.arrayElement(['processing', 'settled', 'failed'])
+    }));
+};
+
+// Initialize our transaction pool
+let transactionPool = generateTransactionPool();
+
 export const getTransactions = async ({
     page = 1,
     limit = 20,
@@ -25,8 +39,13 @@ export const getTransactions = async ({
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
+    // If we're running low on transactions, generate more
+    if (page * limit > transactionPool.length - limit) {
+        transactionPool = [...transactionPool, ...generateTransactionPool()];
+    }
+
     // Filter transactions
-    let filteredTransactions = [...allTransactions];
+    let filteredTransactions = [...transactionPool];
     if (status !== 'all') {
         filteredTransactions = filteredTransactions.filter(t => t.status === status);
     }
@@ -35,39 +54,43 @@ export const getTransactions = async ({
     if (sortField !== 'none') {
         filteredTransactions.sort((a, b) => {
             if (sortField === 'date') {
-                const dateA = new Date(a.date).getTime();
-                const dateB = new Date(b.date).getTime();
-                return sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
-            } else {
-                return sortDirection === 'desc' ? b.amount - a.amount : a.amount - b.amount;
+                return sortDirection === 'asc'
+                    ? new Date(a.date).getTime() - new Date(b.date).getTime()
+                    : new Date(b.date).getTime() - new Date(a.date).getTime();
             }
+            if (sortField === 'amount') {
+                return sortDirection === 'asc'
+                    ? a.amount - b.amount
+                    : b.amount - a.amount;
+            }
+            return 0;
         });
     }
 
-    // Paginate
     const start = (page - 1) * limit;
     const end = start + limit;
     const paginatedTransactions = filteredTransactions.slice(start, end);
 
+    // Always ensure we have more data for the next page
+    const hasMore = true; // We can always generate more
+
     return {
-        transactions: paginatedTransactions as Transaction[],
-        hasMore: end < filteredTransactions.length,
+        transactions: paginatedTransactions,
+        hasMore,
         nextPage: page + 1
     };
 };
 
-let transactionCounter = 0;
 
 export function getTransaction() {
-    const merchants = ['Apple Store', 'Amazon', 'Starbucks', 'Netflix', 'Uber'];
     const statuses: Array<Transaction['status']> = ['processing', 'settled', 'failed'];
 
     const transaction: Transaction = {
-        id: `tx_${Date.now()}_${++transactionCounter}`,
-        date: new Date().toISOString(),
-        amount: Math.round(Math.random() * 10000) / 100,
-        merchant: merchants[Math.floor(Math.random() * merchants.length)],
-        status: statuses[Math.floor(Math.random() * statuses.length)]
+        id: `tx_${faker.string.nanoid()}`,
+        date: faker.date.recent({ days: 7 }).toISOString(),
+        amount: parseFloat(faker.finance.amount({ min: 1, max: 1000, dec: 2 })),
+        merchant: faker.company.name(),
+        status: faker.helpers.arrayElement(statuses)
     };
 
     return transaction;
