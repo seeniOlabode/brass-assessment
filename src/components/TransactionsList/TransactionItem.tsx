@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 interface TransactionItemProps {
     transaction: Transaction;
-    focused?: boolean;
+    focused: boolean;
 }
 
 const statusStyles = {
@@ -32,7 +32,7 @@ const TransactionItem = ({ transaction, focused }: TransactionItemProps) => {
             id={transaction.id}
             tabIndex={0}
             aria-label={`Transaction from ${transaction.merchant}: ${transaction.amount} pounds, Status: ${transaction.status}`}
-            className="list-none relative p-4 hover:bg-gray-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset focus:bg-gray-50 dark:focus:bg-zinc-900"
+            className="transaction-item list-none relative p-4 hover:bg-gray-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset focus:bg-gray-50 dark:focus:bg-zinc-900"
         >
             <div className="flex justify-between items-center">
                 <div>

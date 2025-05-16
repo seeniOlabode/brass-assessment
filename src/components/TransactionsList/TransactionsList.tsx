@@ -17,6 +17,7 @@ type State = {
   sortDirection: SortDirection;
   status: Status;
   transactions: Transaction[];
+  firstItemIndex: number;
   isLoading: boolean;
   hasMore: boolean;
   nextPage: number;
@@ -37,6 +38,7 @@ const initialState: State = {
   sortDirection: 'desc',
   status: 'all',
   transactions: [],
+  firstItemIndex: 0,
   isLoading: true,
   hasMore: true,
   nextPage: 1
@@ -79,7 +81,8 @@ function reducer(state: State, action: Action): State {
     case 'ADD_TRANSACTION':
       return {
         ...state,
-        transactions: [action.transaction, ...state.transactions]
+        transactions: [action.transaction, ...state.transactions],
+        firstItemIndex: 1
       };
     case 'UPDATE_PAGINATION':
       return {
@@ -181,6 +184,7 @@ const TransactionsList = () => {
 
   const renderWebSocketUI = () => {
     return <div className='absolute top-2 left-2'>
+
       <span className='block'>
         <span className='font-semibold'>Web Socket: </span>{connectionStatus}
       </span>
@@ -210,6 +214,7 @@ const TransactionsList = () => {
           transactions={sortedTransactions}
           isLoading={state.isLoading}
           loadMore={loadMore}
+          firstItemIndex={state.firstItemIndex}
         />
       </div>
 

@@ -21,19 +21,18 @@ const TransactionsListContainer = React.forwardRef<HTMLDivElement, TransactionsL
             {children}
         </div>
     )
-
 })
 
 interface TransactionsListWrapperProps {
     transactions: Transaction[];
+    firstItemIndex: number;
     isLoading: boolean;
     loadMore: () => void;
 }
 
-const TransactionsListWrapper = forwardRef<VirtuosoHandle, TransactionsListWrapperProps>(({ transactions, isLoading, loadMore }, ref) => {
-    const [currentItemIndex, setCurrentItemIndex] = React.useState(-1)
-    const listRef = React.useRef<HTMLElement | Window>(null)
-
+const TransactionsListWrapper = forwardRef<VirtuosoHandle, TransactionsListWrapperProps>(({ transactions, firstItemIndex, isLoading, loadMore }, ref) => {
+    const [currentItemIndex, setCurrentItemIndex] = React.useState(-1);
+    const listRef = React.useRef<HTMLElement | Window>(null);
     const keyDownCallback = React.useCallback(
         (e: React.KeyboardEvent) => {
             let nextIndex = null
@@ -56,7 +55,7 @@ const TransactionsListWrapper = forwardRef<VirtuosoHandle, TransactionsListWrapp
             }
         },
         [currentItemIndex, ref, setCurrentItemIndex]
-    )
+    );
 
     const scrollerRef = React.useCallback(
         (element: HTMLElement | Window | null) => {
@@ -105,6 +104,7 @@ const TransactionsListWrapper = forwardRef<VirtuosoHandle, TransactionsListWrapp
                 }}
                 scrollerRef={scrollerRef}
                 context={{ currentItemIndex }}
+                firstItemIndex={firstItemIndex}
             />
         </div>
     );
