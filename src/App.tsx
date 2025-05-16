@@ -15,15 +15,14 @@ const config = {
 const App = () => {
     const { toggleTheme, reverseTheme } = useTheme();
 
-
-    return <div className="fixed inset-0 dark:bg-zinc-950 dark:text-white flex align-end">
-        <button className="absolute top-2 right-2" onClick={toggleTheme}>
-            Change theme to {reverseTheme}
-        </button>
-        <TransactionsProvider config={config}>
+    return <TransactionsProvider config={config}>
+        <div className="fixed inset-0 dark:bg-zinc-950 dark:text-white flex align-end">
+            <button className="absolute top-2 right-2" onClick={toggleTheme}>
+                Change theme to {reverseTheme}
+            </button>
             <TransactionsList />
-        </TransactionsProvider>
-    </div>
+        </div>
+    </TransactionsProvider>
 }
 
 export default App
