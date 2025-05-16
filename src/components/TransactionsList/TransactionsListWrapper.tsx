@@ -35,12 +35,15 @@ const TransactionsListWrapper = forwardRef<VirtuosoHandle, TransactionsListWrapp
     const listRef = React.useRef<HTMLElement | Window>(null);
     const keyDownCallback = React.useCallback(
         (e: React.KeyboardEvent) => {
+            const items = Array.from(e.currentTarget.getElementsByTagName('li'));
+            const focusedItem = items.find(item => item === document.activeElement);
+            const normalizedCurrentItemIndex = focusedItem ? Number(focusedItem.parentElement?.dataset['index']) : currentItemIndex
             let nextIndex = null
 
             if (e.code === 'ArrowUp') {
-                nextIndex = Math.max(0, currentItemIndex - 1)
+                nextIndex = Math.max(0, normalizedCurrentItemIndex - 1)
             } else if (e.code === 'ArrowDown') {
-                nextIndex = Math.min(99, currentItemIndex + 1)
+                nextIndex = Math.min(99, normalizedCurrentItemIndex + 1)
             }
 
             if (nextIndex !== null && ref && 'current' in ref) {
