@@ -1,25 +1,17 @@
 # Transactions Feed App
 
-A modern, accessible React application for displaying and managing real-time transaction feeds. Built with React, TypeScript, and Tailwind CSS.
+A React application that demonstrates real-time transaction list management using WebSocket integration. The app features an infinite-scroll list of transactions with keyboard navigation support.
 
-## Features
+## About
 
-- 📊 Real-time transaction updates via WebSocket
-- ♿ Fully accessible with keyboard navigation
-- 🔄 Infinite scroll pagination
-- 🔍 Transaction filtering by status
-- ⚡ Virtualized list for optimal performance
-- 🌓 Dark mode support
-- 📱 Responsive design
+The application connects to a WebSocket echo server to simulate real-time updates. Since it's an echo server, the app includes a button that allows users to send test transactions, which are then echoed back by the server and prepended to the list. This demonstrates how real-time updates would work in a production environment with a real WebSocket server.
 
 ## Tech Stack
 
-- React 19
-- TypeScript
-- Tailwind CSS
-- React Virtuoso (for virtualized lists)
-- Radix UI (for accessible components)
-- Vite (for development and building)
+- React 19 with TypeScript
+- Tailwind CSS for styling
+- React Virtuoso for efficient list rendering
+- WebSocket integration for real-time updates
 
 ## Prerequisites
 
@@ -49,33 +41,16 @@ A modern, accessible React application for displaying and managing real-time tra
 
 4. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-## Scripts
+## Available Scripts
 
 - `pnpm dev` - Start development server
 - `pnpm build` - Build for production
 - `pnpm preview` - Preview production build
 - `pnpm lint` - Run ESLint
 
-## Keyboard Navigation
+## Testing Real-time Updates
 
-- `↑` / `↓` - Navigate through transactions
-- `Home` / `End` - Jump to first/last transaction
-- `Tab` - Navigate through interactive elements
-- `Enter` / `Space` - Select/activate focused element
-
-## API Integration
-
-The app uses:
-
-- JSONPlaceholder API for transaction data
-- WebSocket Echo Server for real-time updates
-
-## Accessibility
-
-This application is built with accessibility in mind, following WCAG guidelines:
-
-- Full keyboard navigation
-- ARIA labels and roles
-- Focus management
-- High contrast ratios
-- Screen reader friendly
+1. The WebSocket connection status is displayed in the top-left corner
+2. Use the "Send Test Transaction" button to send a transaction
+3. The echo server will return the transaction, and it will appear at the top of the list
+4. The list supports keyboard navigation (↑/↓ arrows) and infinite scrolling
