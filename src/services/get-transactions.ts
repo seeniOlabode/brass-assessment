@@ -82,12 +82,12 @@ export const getTransactions = async ({
 };
 
 
-export function getTransaction() {
+export function getTransaction({ useCurrentTime = false }: { useCurrentTime?: boolean } = {}) {
     const statuses: Array<Transaction['status']> = ['processing', 'settled', 'failed'];
 
     const transaction: Transaction = {
         id: `tx_${faker.string.nanoid()}`,
-        date: faker.date.recent({ days: 7 }).toISOString(),
+        date: useCurrentTime ? new Date().toISOString() : faker.date.recent({ days: 7 }).toISOString(),
         amount: parseFloat(faker.finance.amount({ min: 1, max: 1000, dec: 2 })),
         merchant: faker.company.name(),
         status: faker.helpers.arrayElement(statuses)

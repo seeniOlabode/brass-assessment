@@ -1,5 +1,5 @@
 import { type Transaction } from "@/@types/transactions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface TransactionItemProps {
     transaction: Transaction;
@@ -13,6 +13,8 @@ const statusStyles = {
 };
 
 const TransactionItem = ({ transaction, focused }: TransactionItemProps) => {
+    const [isRecent, setIsRecent] = useState(false);
+
     const formattedDate = new Date(transaction.date).toLocaleString(undefined, {
         year: 'numeric',
         month: 'short',
@@ -20,6 +22,19 @@ const TransactionItem = ({ transaction, focused }: TransactionItemProps) => {
         hour: '2-digit',
         minute: '2-digit'
     });
+
+    useEffect(() => {
+        const transactionDate = new Date(transaction.date);
+        const now = new Date();
+        const isNew = (now.getTime() - transactionDate.getTime()) < 5000; // 10 seconds
+
+        setIsRecent(isNew);
+
+        if (isNew) {
+            const timer = setTimeout(() => setIsRecent(false), 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [transaction.date]);
 
     useEffect(() => {
         if (focused) {
@@ -36,7 +51,14 @@ const TransactionItem = ({ transaction, focused }: TransactionItemProps) => {
         >
             <div className="flex justify-between items-center">
                 <div>
-                    <p className="font-medium text-gray-900 dark:text-white">{transaction.merchant}</p>
+                    <div className="flex items-center gap-2">
+                        <p className="font-medium text-gray-900 dark:text-white">{transaction.merchant}</p>
+                        {isRecent && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-gray-200 text-gray-900 rounded-full dark:bg-blue-900 dark:text-blue-200">
+                                Now
+                            </span>
+                        )}
+                    </div>
                     <p className="text-sm text-gray-500" aria-label={`Transaction date: ${formattedDate}`}>
                         {formattedDate}
                     </p>

@@ -192,7 +192,7 @@ const TransactionsList = () => {
       </span>
 
       {
-        readyState === ReadyState.OPEN && <button className='block py-2 px-2 text-center border border-gray-200 dark:border-zinc-700 mb-2 hover:bg-gray-100 dark:hover:bg-zinc-900 mt-1' onClick={() => sendMessage(JSON.stringify(getTransaction()))}>
+        readyState === ReadyState.OPEN && <button className='block py-2 px-2 text-center border border-gray-200 dark:border-zinc-700 mb-2 hover:bg-gray-100 dark:hover:bg-zinc-900 mt-1' onClick={() => sendMessage(JSON.stringify(getTransaction({ useCurrentTime: true })))}>
           Add transaction
         </button>
       }
