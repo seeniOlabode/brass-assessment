@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useReducer, useMemo, useEffect, useRef } from 'react';
+import { useReducer, useMemo, useEffect, useRef, useState } from 'react';
 import { type VirtuosoHandle } from 'react-virtuoso';
 import TransactionsListWrapper from './TransactionsListWrapper';
 import TransactionControls from './TransactionControls';
@@ -104,6 +104,7 @@ const TransactionsList = () => {
     status: config.defaultStatus
   });
   const transactionsContainerRef = useRef<VirtuosoHandle>(null);
+  const [shouldScrollUp, setShouldScrollUp] = useState(false);
 
   const loadTransactions = async (page: number) => {
     dispatch({ type: 'SET_LOADING', isLoading: true });
@@ -155,14 +156,15 @@ const TransactionsList = () => {
       'merchant' in lastJsonMessage &&
       'status' in lastJsonMessage) {
       dispatch({ type: 'ADD_TRANSACTION', transaction: lastJsonMessage as Transaction });
-      scrollTransactionsToTop();
+      setShouldScrollUp(true);
     }
-  }, [lastJsonMessage])
-  const scrollTransactionsToTop = () => {
-    if (transactionsContainerRef.current) {
+  }, [lastJsonMessage]);
+  useEffect(() => {
+    if (shouldScrollUp && transactionsContainerRef.current) {
       transactionsContainerRef.current.scrollToIndex({ index: 0, behavior: 'smooth' });
+      setShouldScrollUp(false);
     }
-  }
+  }, [shouldScrollUp]);
 
   // Reset and reload when sort or filter changes
   useEffect(() => {
