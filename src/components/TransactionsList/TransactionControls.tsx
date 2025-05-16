@@ -1,5 +1,5 @@
-import type { SortField, SortDirection, Status } from '@/App';
-import { Select, type SelectOption } from './Select';
+import type { SortField, SortDirection, Status } from '@/components/TransactionsList/TransactionsList';
+import { Select, type SelectOption } from '../shared/Select';
 
 interface TransactionControlsProps {
     sortField: SortField;
@@ -13,7 +13,7 @@ interface TransactionControlsProps {
 const sortFieldOptions: SelectOption<SortField>[] = [
     { value: 'date', label: 'Date' },
     { value: 'amount', label: 'Amount' },
-    { value: 'none', label: 'Natural Order' }
+    { value: 'none', label: 'None' }
 ];
 
 const sortDirectionOptions: SelectOption<SortDirection>[] = [

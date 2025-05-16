@@ -14,9 +14,9 @@ interface SelectProps<T extends string> {
     label: string;
 }
 
-export function Select<T extends string>({ 
-    value, 
-    onValueChange, 
+export function Select<T extends string>({
+    value,
+    onValueChange,
     options,
     placeholder,
     label
@@ -24,7 +24,7 @@ export function Select<T extends string>({
     return (
         <RadixSelect.Root value={value} onValueChange={onValueChange}>
             <RadixSelect.Trigger
-                className="inline-flex items-center justify-between px-3 py-2 text-sm gap-2 bg-white border border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="inline-flex items-center justify-between px-3 py-2 text-sm gap-2 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-700 hover:bg-gray-100 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 aria-label={label}
             >
                 <RadixSelect.Value placeholder={placeholder} />
@@ -34,13 +34,13 @@ export function Select<T extends string>({
             </RadixSelect.Trigger>
 
             <RadixSelect.Portal>
-                <RadixSelect.Content className="overflow-hidden bg-white shadow-lg border border-gray-200" position='popper' sideOffset={5} align='end'>
-                    <RadixSelect.Viewport className='divide-y divide-gray-200'>
+                <RadixSelect.Content className="overflow-hidden bg-white dark:bg-zinc-950 shadow-lg border border-gray-200 dark:border-zinc-700" position='popper' sideOffset={5} align='end'>
+                    <RadixSelect.Viewport className='divide-y divide-gray-200 dark:divide-zinc-700'>
                         {options.map((option) => (
-                            <RadixSelect.Item 
+                            <RadixSelect.Item
                                 key={option.value}
-                                value={option.value} 
-                                className="relative flex items-center px-6 py-2 text-sm text-gray-700 cursor-default select-none hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                value={option.value}
+                                className="relative flex items-center px-6 py-2 text-sm text-gray-700 dark:text-white cursor-default select-none hover:bg-gray-100 dark:hover:bg-zinc-950 focus:outline-none focus:bg-gray-100 dark:focus:bg-zinc-900"
                             >
                                 <RadixSelect.ItemText>{option.label}</RadixSelect.ItemText>
                             </RadixSelect.Item>

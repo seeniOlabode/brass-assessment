@@ -23,17 +23,17 @@ const TransactionItem = ({ transaction }: TransactionItemProps) => {
         <li
             tabIndex={0}
             aria-label={`Transaction from ${transaction.merchant}: ${transaction.amount} pounds, Status: ${transaction.status}`}
-            className="relative p-4 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset focus:bg-gray-50"
+            className="list-none relative p-4 hover:bg-gray-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset focus:bg-gray-50 dark:focus:bg-zinc-900"
         >
             <div className="flex justify-between items-center">
                 <div>
-                    <p className="font-medium text-gray-900">{transaction.merchant}</p>
+                    <p className="font-medium text-gray-900 dark:text-white">{transaction.merchant}</p>
                     <p className="text-sm text-gray-500" aria-label={`Transaction date: ${formattedDate}`}>
                         {formattedDate}
                     </p>
                 </div>
                 <div className="text-right">
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-white">
                         £{transaction.amount.toFixed(2)}
                     </p>
                     <span
