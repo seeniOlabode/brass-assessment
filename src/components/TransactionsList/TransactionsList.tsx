@@ -92,7 +92,7 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-function TransactionsList() {
+const TransactionsList = () => {
   const config = useTransactionsConfig();
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,

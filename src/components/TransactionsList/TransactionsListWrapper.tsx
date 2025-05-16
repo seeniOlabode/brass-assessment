@@ -9,38 +9,9 @@ interface TransactionsListContainerProps extends React.HTMLAttributes<HTMLDivEle
 }
 
 const TransactionsListContainer = React.forwardRef<HTMLDivElement, TransactionsListContainerProps>(({ children, style, ...props }, ref) => {
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        const items = Array.from(e.currentTarget.getElementsByTagName('li'));
-        const currentIndex = items.findIndex(item => item === document.activeElement);
-
-        switch (e.key) {
-            case 'ArrowDown':
-                e.preventDefault();
-                if (currentIndex < items.length - 1) {
-                    items[currentIndex + 1].focus();
-                }
-                break;
-            case 'ArrowUp':
-                e.preventDefault();
-                if (currentIndex > 0) {
-                    items[currentIndex - 1].focus();
-                }
-                break;
-            case 'Home':
-                e.preventDefault();
-                items[0].focus();
-                break;
-            case 'End':
-                e.preventDefault();
-                items[items.length - 1].focus();
-                break;
-        }
-    };
-
     return (
         <div
             {...props}
-            onKeyDown={handleKeyDown}
             style={style}
             ref={ref}
             className="divide-y divide-gray-200 dark:divide-zinc-700"
@@ -60,6 +31,45 @@ interface TransactionsListWrapperProps {
 }
 
 const TransactionsListWrapper = forwardRef<VirtuosoHandle, TransactionsListWrapperProps>(({ transactions, isLoading, loadMore }, ref) => {
+    const [currentItemIndex, setCurrentItemIndex] = React.useState(-1)
+    const listRef = React.useRef<HTMLElement | Window>(null)
+
+    const keyDownCallback = React.useCallback(
+        (e: React.KeyboardEvent) => {
+            let nextIndex = null
+
+            if (e.code === 'ArrowUp') {
+                nextIndex = Math.max(0, currentItemIndex - 1)
+            } else if (e.code === 'ArrowDown') {
+                nextIndex = Math.min(99, currentItemIndex + 1)
+            }
+
+            if (nextIndex !== null && ref && 'current' in ref) {
+                ref.current?.scrollIntoView({
+                    index: nextIndex,
+                    behavior: 'auto',
+                    done: () => {
+                        setCurrentItemIndex(nextIndex)
+                    },
+                })
+                e.preventDefault()
+            }
+        },
+        [currentItemIndex, ref, setCurrentItemIndex]
+    )
+
+    const scrollerRef = React.useCallback(
+        (element: HTMLElement | Window | null) => {
+            if (element) {
+                element.addEventListener('keydown', keyDownCallback as unknown as EventListenerOrEventListenerObject)
+                listRef.current = element
+            } else {
+                listRef.current?.removeEventListener('keydown', keyDownCallback as unknown as EventListenerOrEventListenerObject)
+            }
+        },
+        [keyDownCallback]
+    )
+
     const Footer = () => {
         return isLoading ? (
             <div className="p-4 text-center text-gray-500">
@@ -82,17 +92,19 @@ const TransactionsListWrapper = forwardRef<VirtuosoHandle, TransactionsListWrapp
                 ref={ref}
                 data={transactions}
                 endReached={loadMore}
-                itemContent={(_, transaction) => (
+                itemContent={(i, transaction, { currentItemIndex }) => (
                     <TransactionItem
                         key={transaction.id}
                         transaction={transaction}
+                        focused={currentItemIndex === i}
                     />
                 )}
                 components={{
                     Footer,
                     List: TransactionsListContainer,
                 }}
-
+                scrollerRef={scrollerRef}
+                context={{ currentItemIndex }}
             />
         </div>
     );

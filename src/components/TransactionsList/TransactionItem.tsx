@@ -1,7 +1,9 @@
 import { type Transaction } from "@/@types/transactions";
+import { useEffect } from "react";
 
 interface TransactionItemProps {
     transaction: Transaction;
+    focused?: boolean;
 }
 
 const statusStyles = {
@@ -10,7 +12,7 @@ const statusStyles = {
     failed: 'bg-red-100 text-red-800'
 };
 
-const TransactionItem = ({ transaction }: TransactionItemProps) => {
+const TransactionItem = ({ transaction, focused }: TransactionItemProps) => {
     const formattedDate = new Date(transaction.date).toLocaleString(undefined, {
         year: 'numeric',
         month: 'short',
@@ -19,8 +21,15 @@ const TransactionItem = ({ transaction }: TransactionItemProps) => {
         minute: '2-digit'
     });
 
+    useEffect(() => {
+        if (focused) {
+            document.getElementById(transaction.id)?.focus();
+        }
+    }, [focused, transaction.id]);
+
     return (
         <li
+            id={transaction.id}
             tabIndex={0}
             aria-label={`Transaction from ${transaction.merchant}: ${transaction.amount} pounds, Status: ${transaction.status}`}
             className="list-none relative p-4 hover:bg-gray-50 dark:hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset focus:bg-gray-50 dark:focus:bg-zinc-900"
